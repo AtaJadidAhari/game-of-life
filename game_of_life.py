@@ -3,21 +3,9 @@ import random
 def decision(probability):
     return random.random() < probability
 
-def add_square(board, x, y):
-	board[x][y] = 1
-	if x < 9:
-		board[x + 1][y] = 1
-	if y < 9:
-		board[x][y + 1] = 1
-	if x < 9 and y < 9:
-		board[x + 1][y + 1] = 1
-	return board
-
-
-	
 def show_board(board):
-	for i in range(21):
-		for j in range(21):
+	for i in range(2 * (X + 1) + 1):
+		for j in range(2 * (Y + 1) + 1):
 			if i % 2 == 0:
 				print('-', end='')
 			else:
@@ -41,8 +29,7 @@ def alive_neighbors(board, x, y):
 
 
 
-X = 9
-Y = 9	
+	
 
 
 def edge_neighbors(x, y):
@@ -129,8 +116,8 @@ def evolution(board, p):
 
 	new_board = [[0 for i in range(10)] for j in range(10)]
 	
-	for i in range(10):
-		for j in range(10):
+	for i in range(X + 1):
+		for j in range(Y + 1):
 			neighs = alive_neighbors(board, i, j) 
 			if board[i][j] == 1:
 				
@@ -157,20 +144,14 @@ def evolution(board, p):
 						new_board[i][j] = 1
 						print_undone([i+1, j+1], 2)
 			else:
-				if neighs == 2: #rule number 4
+				if neighs == 3: #rule number 4
 					if decision(p):					
 						new_board[i][j] = 1
 						print_done([i+1, j+1], 4)
 					else:
 						new_board[i][j] = 0
 						print_undone([i+1, j+1], 4)
-				elif neighs == 4: #rule number 5
-					if decision(p):					
-						new_board[i][j] = 1
-						print_done([i+1, j+1], 5)
-					else:
-						new_board[i][j] = 0
-						print_undone([i+1, j+1], 5)
+				
 
 	return new_board
 	
@@ -178,41 +159,38 @@ def evolution(board, p):
 
 
 
-#print( neighbors(0,5) + edge_neighbors(0, 5))
 
+X , Y = map(int, input("Please enter the number of rows and columns of the world.\n").split())
 
-
-
+X -= 1
+Y -= 1
 p = float(input("Please enter probability of p.\n"))
 
-temp = int(input("Please enter 1 if you want to insert a square, else 2. \n"))
+
+
 
 
 
 board = [[0 for i in range(10)] for j in range(10)]
-if temp == 1:
-	x, y = map(int, input("Please enter x and y of inital cell, seperated by space.\n").split(' '))
+
+
+
+num_of_alives = int(input("Please number of entries you want to add.\n"))
+for i in range(num_of_alives):
+	x, y = map(int, input("Please enter x and y of the cell, seperated by space.\n").split(' '))
 	x = x - 1
 	y = y -1
-	board = add_square(board, x, y)
-
-else:
-	num_of_alives = int(input("Please number of entries you want to add.\n"))
-	for i in range(num_of_alives):
-		x, y = map(int, input("Please enter x and y of the cell, seperated by space.\n").split(' '))
-		x = x - 1
-		y = y -1
-		board[x][y] = 1
+	board[x][y] = 1
 
 
-
+num_of_iteration = int(input("Please enter number of iterations.\n"))
 		
 
 show_board(board)
 
 print("Universe state in step: ", 0)
 
-for i in range(10):
+for i in range(num_of_iteration):
 	
 	
 	input("Press enter to go to next step. \n\n")
