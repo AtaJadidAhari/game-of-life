@@ -1,2 +1,1 @@
-# game-of-life
-Conway's game of life
+This code implements a version of Conway's game of life (https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). The difference is that i have assigned a probability to every rule, so it is a probabilistic world. You can set this probablity to 1 in order to fully implement Conway's game. The outer layers are also connected, i.e. the left column is connected to the right and vice versa, same goes for top and bottom row.
